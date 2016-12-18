@@ -1,42 +1,52 @@
-/*eslint indent:0*/
+/*eslint indent:0, camelcase:0*/
 module.exports = function(grunt) {
-  grunt.initConfig({
-    browserify: {
-      options: {
-        browserifyOptions: {
-          paths: [
-            './public/src/js',
-            './public/src'
-          ],
-          debug: true
-        }
-      },
-      dist   : {
-        options: {
-          transform: [
-            ['babelify', {'presets': ['es2015', 'react']}]
-          ]
+    grunt.initConfig({
+        browserify: {
+            dev: {
+                options: {
+                    browserifyOptions: {
+                        paths: [
+                            './public/src/js',
+                            './public/src'
+                        ],
+                        debug: true
+                    },
+                    transform        : [
+                        ['babelify', {'presets': ['es2015', 'react']}]
+                    ]
+                },
+                files  : {
+                    'public/build/js/bundle.js': ['public/src/js/index.js']
+                }
+            }
         },
-        files  : {
-          'public/build/js/bundle.js': ['public/src/js/index.js']
-        }
-      }
-    },
-    
-    sass: {
-      dist: {
-        options: {
-          style: 'expanded'
+        
+        notify: {
+            n_bfy: {
+                options: {
+                    title  : 'Browserify',
+                    message: 'Bundle.js was successfully generated...',
+                }
+            }
         },
-        files  : {
-          'public/build/css/main.css': 'public/src/scss/materialize.scss'
+        
+        sass: {
+            dist: {
+                options: {
+                    style: 'expanded'
+                },
+                files  : {
+                    'public/build/css/main.css': 'public/src/scss/materialize.scss'
+                }
+            }
         }
-      }
-    }
+        
+    });
     
-  });
-  
-  grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-notify');
+    
+    grunt.registerTask('build', ['browserify:dev', 'notify:n_bfy'])
+    
 };

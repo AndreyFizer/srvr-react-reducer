@@ -94,3 +94,6 @@ fabric.properties
 
 .gitignore
 .idea/
+/public/build/
+/.sass-cache/
+/config.js

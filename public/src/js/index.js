@@ -15,7 +15,6 @@ if (localStorage.getItem('token')) {
     store.dispatch({type: AUTH_USER});
 }
 
-
 ReactDOM.render(
     <Provider store={store}>
         <Router history={hashHistory} routes={routes}/>
