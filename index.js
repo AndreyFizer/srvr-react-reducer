@@ -17,6 +17,8 @@ router(app);
 const port = process.env.PORT || 3033;
 const server = http.createServer(app);
 
-server.listen(port, function() {
+server.listen(port);
+
+server.on('listening', function() {
     console.log(' ::: Server successfully started at ' + port + ' :::');
 });

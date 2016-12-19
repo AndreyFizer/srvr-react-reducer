@@ -1,7 +1,6 @@
 import axios from 'axios';
-import {SIGN_IN} from 'actions/types';
+import {SIGN_IN, AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE, FETCH_USERS} from 'actions/types';
 import {hashHistory} from 'react-router';
-import {AUTH_USER, UNAUTH_USER, AUTH_ERROR, FETCH_MESSAGE} from 'actions/types';
 
 export function userSignin({email, password}) {
     return function(dispatch) {
@@ -43,6 +42,18 @@ export function fetchMessage() {
                 dispatch({
                     type   : FETCH_MESSAGE,
                     payload: response.data.message
+                })
+            })
+    }
+}
+
+export function fetchUsers() {
+    return function(dispatch) {
+        axios.get('/users', {headers: {authorization: localStorage.getItem('token')}})
+            .then(response => {
+                dispatch({
+                    type   : FETCH_USERS,
+                    payload: response.data.users
                 })
             })
     }

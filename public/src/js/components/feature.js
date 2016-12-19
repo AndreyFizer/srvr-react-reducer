@@ -4,21 +4,31 @@ import {connect} from 'react-redux';
 
 class Feature extends Component {
     componentWillMount() {
-        this.props.fetchMessage();
+        this.props.fetchUsers();
+    }
+    
+    renderUsers() {
+        return this.props.users.map(usr => (
+            <li key={usr._id}>
+                <span>{usr.email}</span>
+            </li>
+        ))
     }
     
     render() {
         return (
             <div>
                 <h4>Secret info:</h4>
-                <div>{this.props.message}</div>
+                <ul>
+                    {this.renderUsers()}
+                </ul>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    message: state.auth.message
+    users: state.users.userList
 });
 
 export default connect(mapStateToProps, actions)(Feature);
